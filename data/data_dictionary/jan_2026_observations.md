@@ -1,0 +1,1 @@
+1. have so many trip record by vendor_id = 2, vendor_name = Curb Mobility, LLC
