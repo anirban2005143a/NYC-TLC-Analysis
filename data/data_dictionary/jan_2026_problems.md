@@ -1,9 +1,9 @@
 ### Dirty Data
 
 1. `passenger_count`, `RatecodeID`, `store_and_fwd_flag`, `congestion_surcharge`, and `Airport_fee` contain null values.
-2. `VendorID` should not contain any value other than `[2, 1, 7, 6]`.
-3. `trip_distance` values do not match the pickup and drop-off time based on normal/extreme taxi speeds.
-4. `trip_distance` contains `0` values.
+2. `VendorID` should not contain any value other than `[2, 1, 7, 6]`. - done
+3. `trip_distance` chross check with zone shape file approximate distance. - done
+4. `trip_distance` contains `0` values. - done
 5. `RatecodeID` should not contain any value other than `[1, 4, 2, 5, 99, 3, 6]`.
 6. `total_amount` needs to be checked to determine whether it is mathematically correct by summing all applicable fees.
 5. `PULocationID` IDs outside the official lookup.
@@ -12,16 +12,15 @@
 ### Messy Data
 
 1. Normalize the column names to `snake_case`.
-2. `VendorID` should have the datatype `category`.
-2. `VendorID` too many values from vendorId - 2.
-3. `tpep_pickup_datetime` contains February 1st, 2026 dates (January 31st midnight).
-3. `tpep_pickup_datetime` should be < `tpep_dropoff_datetime`
-4. `tpep_dropoff_datetime` contains February 1st, 2026 dates.
-4. `tpep_dropoff_datetime` should be > `tpep_pickup_datetime`
-5. `passenger_count` contains many `0` values.
-6. `passenger_count` can be of type `int4` since it represents the number of passengers in a taxi.
-6. `passenger_count` Whether 0 passenger trips are associated with particular payment/rate categories.
-3. `trip_distance` Very short/non-zero distance. Distance vs. geographical pickup/drop-off zones
+2. `VendorID` should have the datatype `category`. - done
+3. `tpep_pickup_datetime` contains February 1st, 2026 dates (January 31st midnight). - done
+3. `tpep_pickup_datetime` should be < `tpep_dropoff_datetime` - done
+4. `tpep_dropoff_datetime` contains February 1st, 2026 dates. - done
+4. `tpep_dropoff_datetime` should be > `tpep_pickup_datetime` - done
+5. `passenger_count` contains many `0` values. - done
+6. `passenger_count` can be of type `int8` since it represents the number of passengers in a taxi. - done
+3. `trip_distance` Very short/non-zero distance. Distance vs. geographical pickup/drop-off zones - done
+3. `trip_distance` need to check correlation between trip disatance and total_amount or fare_amount
 7. `RatecodeID` should have the datatype `category`.
 8. `store_and_fwd_flag` should be of type `bool`.
 9. `store_and_fwd_flag` contains many null values; this needs to be checked.

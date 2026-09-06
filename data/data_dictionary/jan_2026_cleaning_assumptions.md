@@ -20,3 +20,11 @@ passenger_count:
 1. as yellow_taxi is a kind of taxi , so allowed passenger is atmax 6. source : https://www.nyc.gov/site/tlc/passengers/passenger-frequently-asked-questions.page (Q: How many people can fit into a yellow taxicab?
 
 A: The maximum amount of passengers allowed in a yellow taxicab by law is four (4) in a four (4) passenger taxicab or five (5) passengers in a five (5) passenger taxicab. All passengers must wear seat belts and children under the age of 4 must ride in child safety seats. Children under the age of 8 must ride in a child restraint system, such as a federally approved harness, vest, or booster-seat.)
+
+trip_diatnce & taxi_speed:
+1. taxi_speed < 100
+2. create a new col for `great circle distance' between two representative point of pickup and dropoff zone respectively 
+3. create 2 new col - distance_difference , distance_ratio
+4. distance_ratio <= 5
+4. distance_difference <= 10
+5. trip_distance > 1
