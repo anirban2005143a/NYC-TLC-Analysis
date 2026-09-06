@@ -18,8 +18,12 @@ pickup_datetime & dropoff_datetime:
 passenger_count:
 1. passenger count >= 1 , as 0 passengers is only `0.5554%` (0.005554 ratio)
 1. as yellow_taxi is a kind of taxi , so allowed passenger is atmax 6. source : https://www.nyc.gov/site/tlc/passengers/passenger-frequently-asked-questions.page (Q: How many people can fit into a yellow taxicab?
-
 A: The maximum amount of passengers allowed in a yellow taxicab by law is four (4) in a four (4) passenger taxicab or five (5) passengers in a five (5) passenger taxicab. All passengers must wear seat belts and children under the age of 4 must ride in child safety seats. Children under the age of 8 must ride in a child restraint system, such as a federally approved harness, vest, or booster-seat.)
+3. drop na rows , because  "passenger_count",
+    "fare_type_id",
+    "store_and_fwd_flag",
+    "congestion_surcharge_amount",
+    "airport_fee_amount" - these cols also have na values in the same rows - showing a batch of trip recod missing 
 
 trip_diatnce & taxi_speed:
 1. taxi_speed < 100
