@@ -4,9 +4,9 @@
 2. `VendorID` should not contain any value other than `[2, 1, 7, 6]`. - done
 3. `trip_distance` chross check with zone shape file approximate distance. - done
 4. `trip_distance` contains `0` values. - done
-5. `RatecodeID` should not contain any value other than `[1, 4, 2, 5, 99, 3, 6]`.
+5. `RatecodeID` should not contain any value other than `[1, 4, 2, 5, 99, 3, 6]`. - done
 6. `total_amount` needs to be checked to determine whether it is mathematically correct by summing all applicable fees.
-5. `PULocationID` IDs outside the official lookup.
+5. `PULocationID` IDs outside the official lookup. - done
 5. `payment_type` should not contain any value other than `[0, 1, 2, 3, 4, 5, 6]`.
 
 ### Messy Data
@@ -21,13 +21,12 @@
 6. `passenger_count` can be of type `int8` since it represents the number of passengers in a taxi. - done
 3. `trip_distance` Very short/non-zero distance. Distance vs. geographical pickup/drop-off zones - done
 3. `trip_distance` need to check correlation between trip disatance and total_amount or fare_amount
-7. `RatecodeID` should have the datatype `category`.
-8. `store_and_fwd_flag` should be of type `bool`.
-9. `store_and_fwd_flag` contains many null values; this needs to be checked.
-9. `PULocationID` should have the datatype `category`.
-9. `PULocationID` 264 and 265 is unknown location.
-9. `DOLocationID` should have the datatype `category`.
-9. `DOLocationID` 264 and 265 is unknown location.
+7. `RatecodeID` should have the datatype `category`. - done(int8)
+8. `store_and_fwd_flag` should be of type `boolean`. - done
+9. `PULocationID` should have the datatype `category`. - done
+9. `PULocationID` 264 and 265 is unknown location. - done
+9. `DOLocationID` should have the datatype `category`. - done
+9. `DOLocationID` 264 and 265 is unknown location. - done
 10. `payment_type` should have the datatype `category`.
 11. `fare_amount` contains negative values; these need to be checked against the payment type.
 11. `fare_amount` Decimal/precision consistency.(3 decimal place)
