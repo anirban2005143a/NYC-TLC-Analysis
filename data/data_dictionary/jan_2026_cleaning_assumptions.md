@@ -36,3 +36,6 @@ trip_diatnce & taxi_speed:
 
 fare_type_id:
 1. some fare_type_id is not matching with pickup and dropoff location - will create a col `fare_type_zone_mismatch`
+
+fare_amount:
+2. create a new col `fare_per_distance` group by `fare_type_id` . based on that remove outliers(fare_amount) 

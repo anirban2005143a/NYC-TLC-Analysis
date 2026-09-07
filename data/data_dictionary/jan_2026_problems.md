@@ -27,9 +27,10 @@
 9. `PULocationID` 264 and 265 is unknown location. - done
 9. `DOLocationID` should have the datatype `category`. - done
 9. `DOLocationID` 264 and 265 is unknown location. - done
-10. `payment_type` should have the datatype `category`.
-11. `fare_amount` contains negative values; these need to be checked against the payment type.
-11. `fare_amount` Decimal/precision consistency.(3 decimal place)
+10. `payment_type` should have the datatype `category`. - done
+10. `payment_type` check some patter like when and which payment type occure.
+11. `fare_amount` contains negative values; these need to be checked against the payment type. - done
+11. `fare_amount` change data type to float32 - done
 12. `extra` contains negative values; these need to be checked against the payment type.
 13. `mta_tax` contains negative values; these need to be checked against the payment type.
 13. `mta_tax` Whether values follow the expected tax structure.
