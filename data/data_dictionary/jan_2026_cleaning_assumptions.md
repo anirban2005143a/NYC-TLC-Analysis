@@ -32,3 +32,7 @@ trip_diatnce & taxi_speed:
 4. distance_ratio <= 5
 4. distance_difference <= 10
 5. trip_distance > 1
+
+
+fare_type_id:
+1. some fare_type_id is not matching with pickup and dropoff location - will create a col `fare_type_zone_mismatch`
