@@ -19,3 +19,25 @@
 
 5. remove fare_type_id = 6 , having passenger count < 3
 6. for fare_type_id = 99, there are so many rows where trip_distance very samll but fare_amount is very much 
+7. fare_type_id = 1 contributes 80% of the total extra charges 
+8. found no relation between extra_amount and trip_distance, trip_duration, fare_amount
+9. fare_type_id wise percentage of positive extra amount rows - 
+     fare_type_id   fraction
+     1              0.620404
+     2              0.292638
+     3              0.620422
+     4              0.652105
+     5              0.413089
+     99             0.000030
+9. payment_type wise percentage of positive extra amount rows - 
+     payment_type
+     1              0.572632
+     2              0.550607
+     3              0.788458
+     4              0.595067
+9. extra_amount does not having much outliers 
+8. most of the rider pay though credit card
+10. most of the trip is of type 1 = Standard rate
+11. fare_type_id = 3, has a little bit higher avg extra_amount
+12. payment_type = 1 (credit card) contributes most in total_extra_amount
+13. payment_type = 3 (no charge) has avg and median extra_amount 1.7 and 2.25 dollar more that others respectively

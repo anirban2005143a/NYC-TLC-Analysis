@@ -39,3 +39,6 @@ fare_type_id:
 
 fare_amount:
 2. create a new col `fare_per_distance` group by `fare_type_id` . based on that remove outliers(fare_amount) 
+
+mta_tax_amount:
+1. remove mta_tax_amount > 1.0

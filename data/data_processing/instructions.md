@@ -8,3 +8,4 @@ run all cells of files in order -
     6. clean_fare_type_and_store_fwd_flag.ipynb
     7. clean_fare_amount.ipynb
     8. clean_payment_type.ipynb
+    9. clean_extra_amount.ipynb

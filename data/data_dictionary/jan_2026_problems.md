@@ -31,7 +31,7 @@
 10. `payment_type` check some patter like when and which payment type occure.
 11. `fare_amount` contains negative values; these need to be checked against the payment type. - done
 11. `fare_amount` change data type to float32 - done
-12. `extra` contains negative values; these need to be checked against the payment type.
+12. `extra` check trends . - done
 13. `mta_tax` contains negative values; these need to be checked against the payment type.
 13. `mta_tax` Whether values follow the expected tax structure.
 13. `mta_tax` Extremely large values(relative to other values)
