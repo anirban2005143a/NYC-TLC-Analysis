@@ -42,3 +42,10 @@ fare_amount:
 
 mta_tax_amount:
 1. remove mta_tax_amount > 1.0
+
+tip_amount:
+1. remove those tip_amount > 100
+2. create a new for non credit card positive tip_amount
+
+total_amount:
+1. create a new col extra_total_amount = extra amount in total_amount

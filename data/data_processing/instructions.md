@@ -9,3 +9,4 @@ run all cells of files in order -
     7. clean_fare_amount.ipynb
     8. clean_payment_type.ipynb
     9. clean_extra_amount.ipynb
+    10. clean_surcharge_amounts.ipynb
