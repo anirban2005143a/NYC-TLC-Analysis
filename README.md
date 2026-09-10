@@ -1,108 +1,277 @@
 # 🚕 NYC TLC Taxi Trip Analysis
 
-An end-to-end **data analysis and visualization project** using New York City Taxi & Limousine Commission (NYC TLC) Yellow Taxi trip data.
+An end-to-end **data quality, data cleaning, storage, and visualization project** using the **NYC TLC Yellow Taxi Trip Record Data — January 2026**.
 
-The project focuses on understanding taxi trip patterns, identifying data-quality issues, cleaning and preparing the dataset, and building an interactive **Power BI dashboard** to explore trip, fare, payment, location, and operational patterns.
+The project takes raw taxi trip records through a structured data-quality and cleaning pipeline, stores the processed dataset in **PostgreSQL**, and uses **Power BI** to build interactive dashboards for understanding trip demand, efficiency, geography, fares, payments, and revenue.
 
 ---
 
 ## 📌 Project Overview
 
-The **New York City Taxi & Limousine Commission (NYC TLC)** publishes detailed trip records for licensed taxi services operating in New York City.
+The **New York City Taxi & Limousine Commission (NYC TLC)** publishes trip-level records for New York City's taxi services.
 
-This project analyzes **January 2026 Yellow Taxi trip data** and follows a structured data analytics workflow:
+This project focuses on turning the raw January 2026 Yellow Taxi dataset into a reliable analytical dataset through:
 
-**Raw Data → Data Exploration → Data Cleaning → Cleaned Dataset → Data Storage → Power BI Visualization**
+```text
+Raw TLC Data
+     ↓
+Data Exploration
+     ↓
+Data Quality Analysis
+     ↓
+Column-wise Data Cleaning
+     ↓
+Cleaned Dataset
+     ↓
+PostgreSQL
+     ↓
+Power BI
+     ↓
+Interactive Analysis & Insights
+```
 
-The objective is to transform raw taxi trip records into meaningful insights that can help understand:
+The project is designed around an important principle:
 
-* 🚕 Taxi trip behavior
-* 📍 Pickup and drop-off patterns
-* 💰 Fare and payment patterns
-* 👥 Passenger-related information
-* ⏱️ Trip timing and duration
-* 🗺️ Taxi-zone activity
-* 📊 Overall operational patterns
+> **Reliable analysis starts with reliable data.**
+
+Instead of directly visualizing the raw dataset, each important attribute is inspected for missing, invalid, inconsistent, or logically impossible values before the data is used for analysis.
 
 ---
 
-## 🎯 Project Objectives
+## 🎯 Objectives
 
 The main objectives of this project are:
 
-1. Understand the structure and characteristics of NYC TLC trip data.
-2. Identify missing, invalid, inconsistent, and abnormal records.
-3. Clean individual data attributes systematically.
-4. Prepare a reliable dataset for analysis and visualization.
-5. Analyze taxi trips across time, location, fare, and payment dimensions.
-6. Build an interactive Power BI dashboard for exploratory analysis.
-7. Create a reproducible and well-documented data-processing workflow.
+* Understand the structure of NYC TLC Yellow Taxi trip data.
+* Perform systematic **data-quality analysis**.
+* Identify missing, invalid, inconsistent, and anomalous values.
+* Clean important attributes individually rather than applying generic rules.
+* Preserve the raw dataset separately from the cleaned dataset.
+* Store the cleaned data in PostgreSQL.
+* Build an interactive Power BI dashboard.
+* Analyze taxi demand, trip efficiency, geography, fares, payments, and revenue.
+* Create a reproducible data-processing workflow.
 
 ---
 
 ## 📊 Dataset
 
-The project uses the **NYC TLC Yellow Taxi Trip Record dataset for January 2026**.
+### Source
 
-### Dataset Files
+**NYC Taxi & Limousine Commission — Trip Record Data**
 
-The repository contains:
+The project currently uses:
 
-* `yellow_tripdata_2026-01.csv` — Raw Yellow Taxi trip data
-* `clean_yellow_tripdata_2026-01.csv` — Cleaned trip dataset
-* `taxi_zone_lookup.csv` — Taxi-zone lookup information
-* NYC TLC trip-record documentation and data dictionary
+* **Vehicle type:** Yellow Taxi
+* **Period:** January 2026
+* **Data type:** Trip-level records
 
-The raw and cleaned datasets are maintained separately to preserve the original source data and make the cleaning process reproducible.
+The dataset contains information related to:
 
----
-
-## 🧹 Data Cleaning
-
-Data cleaning is performed through multiple dedicated Jupyter notebooks rather than one large cleaning script.
-
-The repository contains notebooks for cleaning different groups of variables:
-
-| Notebook                                   | Purpose                                  |
-| ------------------------------------------ | ---------------------------------------- |
-| `observe_data.ipynb`                       | Initial data exploration and observation |
-| `clean_vendor_id.ipynb`                    | Vendor ID validation                     |
-| `clean_pickup_dropoff_datetime.ipynb`      | Pickup/drop-off datetime validation      |
-| `clean_passenger_count.ipynb`              | Passenger count cleaning                 |
-| `clean_trip_distance.ipynb`                | Trip-distance validation                 |
-| `clean_fare_amount.ipynb`                  | Fare amount cleaning                     |
-| `clean_extra_amount.ipynb`                 | Extra-charge validation                  |
-| `clean_surcharge_amounts.ipynb`            | Surcharge cleaning                       |
-| `clean_payment_type.ipynb`                 | Payment-type validation                  |
-| `clean_fare_type_and_store_fwd_flag.ipynb` | Fare and store-forward flag cleaning     |
-| `clean_locations.ipynb`                    | Pickup/drop-off location validation      |
-| `store_to_pg.ipynb`                        | Storing processed data in PostgreSQL     |
-
-The cleaning workflow focuses on detecting and handling invalid values, inconsistent records, missing information, and values that do not make logical sense for taxi trips.
+* Vendor
+* Pickup and drop-off timestamps
+* Passenger count
+* Trip distance
+* Pickup and drop-off taxi zones
+* Rate code
+* Payment type
+* Fare
+* Tips
+* Tolls
+* Surcharges
+* Airport fees
+* Total trip amount
+* Other trip attributes
 
 ---
 
-## 🔍 Data Exploration
+## 🧹 Data Quality & Cleaning
 
-Before cleaning, the dataset is inspected to understand:
+A major part of the project is **attribute-level data cleaning**.
 
-* Data types
+Instead of putting every cleaning rule into a single large notebook, the project separates the work into dedicated notebooks for individual groups of columns.
+
+### Cleaning workflow
+
+| Notebook                                   | Purpose                                                            |
+| ------------------------------------------ | ------------------------------------------------------------------ |
+| `observe_data.ipynb`                       | Initial dataset exploration and identification of potential issues |
+| `clean_vendor_id.ipynb`                    | Vendor ID validation                                               |
+| `clean_pickup_dropoff_datetime.ipynb`      | Pickup/drop-off datetime validation                                |
+| `clean_passenger_count.ipynb`              | Passenger count validation                                         |
+| `clean_trip_distance.ipynb`                | Trip-distance validation                                           |
+| `clean_fare_amount.ipynb`                  | Fare amount validation                                             |
+| `clean_extra_amount.ipynb`                 | Extra-charge validation                                            |
+| `clean_surcharge_amounts.ipynb`            | Surcharge and additional-charge validation                         |
+| `clean_payment_type.ipynb`                 | Payment-type validation                                            |
+| `clean_fare_type_and_store_fwd_flag.ipynb` | Rate/fare type and store-and-forward validation                    |
+| `clean_locations.ipynb`                    | Pickup/drop-off location validation                                |
+| `store_to_pg.ipynb`                        | Loading processed data into PostgreSQL                             |
+
+### Data-quality checks include
+
 * Missing values
-* Duplicate or suspicious records
-* Numerical distributions
-* Categorical values
-* Invalid ranges
-* Location identifiers
-* Temporal information
-* Fare and payment variables
+* Invalid categorical values
+* Invalid numerical ranges
+* Zero and negative values where inappropriate
+* Suspicious trip distances
+* Invalid timestamps
+* Passenger-count anomalies
+* Fare and surcharge inconsistencies
+* Payment-related inconsistencies
+* Invalid pickup/drop-off locations
+* Logical relationships between related fields
+* Geographic consistency checks
 
-This exploratory stage helps determine appropriate cleaning rules before modifying the data.
+The objective is not simply to remove unusual rows, but to determine **whether a value is actually invalid according to the meaning and constraints of the corresponding TLC field**.
 
 ---
 
-## 📈 Analysis Areas
+## 🗃️ Data Organization
 
-The cleaned dataset can be explored across several dimensions.
+The project keeps different stages of the dataset separate:
+
+```text
+data/
+├── raw_data/
+│   ├── yellow_tripdata_2026-01.csv
+│   └── taxi_zone_lookup.csv
+│
+├── cleaned_data/
+│   └── clean_yellow_tripdata_2026-01.csv
+│
+├── data_processing/
+│   ├── observe_data.ipynb
+│   ├── clean_vendor_id.ipynb
+│   ├── clean_pickup_dropoff_datetime.ipynb
+│   ├── clean_passenger_count.ipynb
+│   ├── clean_trip_distance.ipynb
+│   ├── clean_fare_amount.ipynb
+│   ├── clean_extra_amount.ipynb
+│   ├── clean_surcharge_amounts.ipynb
+│   ├── clean_payment_type.ipynb
+│   ├── clean_fare_type_and_store_fwd_flag.ipynb
+│   ├── clean_locations.ipynb
+│   └── store_to_pg.ipynb
+│
+├── data_dictionary/
+│   ├── data_dictionary_trip_records_yellow.pdf
+│   ├── trip_record_user_guide.pdf
+│   ├── jan_2026_observations.md
+│   ├── jan_2026_problems.md
+│   └── jan_2026_cleaning_assumptions.md
+│
+└── taxi_zones/
+    ├── taxi_zones.cpg
+    ├── taxi_zones.dbf
+    ├── taxi_zones.prj
+    ├── taxi_zones.shp
+    └── taxi_zones.shx
+```
+
+The repository also contains the Power BI report:
+
+```text
+NYC_Taxi_Trip.pbix
+```
+
+---
+
+# 🗺️ Taxi Zone Data
+
+NYC TLC provides taxi-zone identifiers that can be mapped to geographic information.
+
+This project includes the NYC taxi-zone shapefile components:
+
+* `.shp`
+* `.shx`
+* `.dbf`
+* `.prj`
+* `.cpg`
+
+These are used to support geographic analysis such as:
+
+* Pickup-zone activity
+* Drop-off-zone activity
+* Zone-level demand
+* Pickup vs. drop-off patterns
+* Geographic distribution of trips
+* Trip-distance analysis by location
+
+---
+
+# 📊 Power BI Dashboard
+
+The cleaned dataset is used to build an interactive **Power BI dashboard**.
+
+The dashboard is divided into three major analytical views.
+
+---
+
+## 1. 🚕 Trip Overview & Demand
+
+This page focuses on the overall characteristics of taxi trips and demand patterns.
+
+Key areas include:
+
+* Total trip activity
+* Trip demand
+* Passenger information
+* Trip distance
+* Trip duration
+* Time-based demand patterns
+* Pickup/drop-off activity
+
+### Dashboard
+
+![Trip Overview & Demand](sceenshots/Trip%20Overview%20%26%20Demand.png)
+
+---
+
+## 2. 💰 Fare, Payment & Revenue Analysis
+
+This page focuses on the financial side of taxi trips.
+
+It explores:
+
+* Fare amounts
+* Total revenue
+* Tips
+* Payment methods
+* Tolls
+* Surcharges
+* Additional charges
+* Relationships between payment and trip characteristics
+
+### Dashboard
+
+![Fare, Payment & Revenue Analysis](sceenshots/Fare,%20Payment%20%26%20Revenue%20Analysis.png)
+
+---
+
+## 3. 📍 Trip Efficiency, Geography & Data Quality
+
+This page combines operational and geographic analysis with data-quality information.
+
+It focuses on areas such as:
+
+* Trip efficiency
+* Trip distance
+* Trip duration
+* Geographic distribution
+* Pickup/drop-off zones
+* Data-quality indicators
+* Suspicious or problematic records
+
+### Dashboard
+
+![Trip Efficiency, Geography & Data Quality](sceenshots/Trip%20Efficiency,%20Geography%20%26%20Data%20Quality.png)
+
+---
+
+# 🔍 Analysis Areas
+
+The cleaned dataset enables analysis across multiple dimensions.
 
 ### 🚕 Trip Analysis
 
@@ -111,161 +280,99 @@ The cleaned dataset can be explored across several dimensions.
 * Trip duration
 * Passenger count
 * Average trip characteristics
-
-### 💰 Fare Analysis
-
-* Fare amount
-* Total trip amount
-* Tips
-* Tolls
-* Surcharges
-* Additional charges
-
-### 💳 Payment Analysis
-
-Analysis of different payment methods and their relationship with trip and fare characteristics.
+* Trip efficiency
 
 ### ⏰ Time Analysis
 
-Trips can be analyzed according to:
+Trips can be analyzed by:
 
 * Date
 * Hour
-* Day of the week
+* Day of week
 * Pickup time
 * Drop-off time
 
-This helps identify changes in taxi activity throughout the day.
+This helps identify changes in taxi demand throughout the day.
 
-### 📍 Location Analysis
+### 📍 Geographic Analysis
 
-Taxi-zone information is used to understand:
+Using taxi-zone information:
 
-* Popular pickup areas
-* Popular drop-off areas
-* Trip flows between zones
-* Geographic distribution of taxi activity
+* Most active pickup zones
+* Most active drop-off zones
+* Pickup vs. drop-off patterns
+* Geographic distribution of trips
+* Zone-level demand
+* Relationship between geographic distance and recorded trip distance
+
+### 💳 Payment Analysis
+
+Payment-related analysis includes:
+
+* Payment-type distribution
+* Fare by payment type
+* Tips by payment type
+* Revenue by payment type
+* Payment and fare consistency
+
+### 💵 Fare & Revenue Analysis
+
+The project analyzes:
+
+* Base fare
+* Total amount
+* Tips
+* Tolls
+* Surcharges
+* Airport fees
+* Additional charges
+* Revenue patterns
 
 ---
 
-## 🗺️ Taxi Zone Data
+# 🗄️ PostgreSQL
 
-The repository also contains NYC taxi-zone shapefile components:
+After cleaning, the processed dataset can be stored in **PostgreSQL**.
+
+The `store_to_pg.ipynb` notebook handles the database-loading stage.
+
+This creates a separation between:
 
 ```text
-taxi_zones/
-├── taxi_zones.cpg
-├── taxi_zones.dbf
-├── taxi_zones.prj
-├── taxi_zones.shp
-└── taxi_zones.shx
+Raw Files
+    ↓
+Cleaning / Processing
+    ↓
+Cleaned Dataset
+    ↓
+PostgreSQL
+    ↓
+Power BI / Analysis
 ```
 
-These files provide the geographic information required for spatial analysis and visualization of NYC taxi zones.
+Using a database also makes the project more suitable for extending the workflow beyond a single CSV-based analysis.
 
 ---
 
-## 📊 Power BI Dashboard
+# 🛠️ Technology Stack
 
-The project includes an interactive Power BI report:
+### Data Analysis
 
-```text
-NYC_Taxi_Trip.pbix
-```
+* Python
+* Pandas
+* Jupyter Notebook
 
-The dashboard is designed to convert the processed taxi data into interactive visualizations and make it easier to explore relationships between:
+### Database
 
-* Trips
-* Time
-* Locations
-* Distance
-* Fare
-* Payment
-* Passengers
+* PostgreSQL
 
-### Dashboard Goals
+### Visualization
 
-The Power BI report allows users to interactively explore the dataset instead of relying only on static charts.
+* Microsoft Power BI
 
-Typical analysis questions include:
+### Geographic Data
 
-* When is taxi demand highest?
-* Which locations generate the most trips?
-* How does trip distance vary?
-* How do fares change with trip characteristics?
-* Which payment methods are most commonly used?
-* How are trips distributed across NYC taxi zones?
-
----
-
-## 🗂️ Project Structure
-
-```text
-NYC-TLC-Analysis/
-│
-├── data/
-│   │
-│   ├── cleaned_data/
-│   │   └── clean_yellow_tripdata_2026-01.csv
-│   │
-│   ├── data_dictionary/
-│   │   ├── data_dictionary_trip_records_yellow.pdf
-│   │   ├── trip_record_user_guide.pdf
-│   │   ├── jan_2026_cleaning_assumptions.md
-│   │   ├── jan_2026_observations.md
-│   │   └── jan_2026_problems.md
-│   │
-│   ├── data_processing/
-│   │   ├── observe_data.ipynb
-│   │   ├── clean_vendor_id.ipynb
-│   │   ├── clean_pickup_dropoff_datetime.ipynb
-│   │   ├── clean_passenger_count.ipynb
-│   │   ├── clean_trip_distance.ipynb
-│   │   ├── clean_fare_amount.ipynb
-│   │   ├── clean_extra_amount.ipynb
-│   │   ├── clean_surcharge_amounts.ipynb
-│   │   ├── clean_payment_type.ipynb
-│   │   ├── clean_fare_type_and_store_fwd_flag.ipynb
-│   │   ├── clean_locations.ipynb
-│   │   ├── store_to_pg.ipynb
-│   │   └── instructions.md
-│   │
-│   ├── raw_data/
-│   │   ├── yellow_tripdata_2026-01.csv
-│   │   └── taxi_zone_lookup.csv
-│   │
-│   └── taxi_zones/
-│       ├── taxi_zones.cpg
-│       ├── taxi_zones.dbf
-│       ├── taxi_zones.prj
-│       ├── taxi_zones.shp
-│       └── taxi_zones.shx
-│
-├── NYC_Taxi_Trip.pbix
-└── README.md
-```
-
----
-
-## 🛠️ Tech Stack
-
-### Programming & Data Analysis
-
-* **Python**
-* **Pandas**
-* **Jupyter Notebook**
-
-### Data Visualization & BI
-
-* **Microsoft Power BI**
-
-### Data Storage
-
-* **PostgreSQL**
-
-### Geospatial Data
-
-* **NYC Taxi Zone Shapefiles**
+* NYC Taxi Zone Shapefiles
 
 ### Data Formats
 
@@ -277,109 +384,136 @@ NYC-TLC-Analysis/
 
 ---
 
-## 🔄 Project Workflow
+# 📁 Repository Structure
 
 ```text
-              NYC TLC Dataset
-                    │
-                    ▼
-             Raw Data Loading
-                    │
-                    ▼
-            Data Observation
-                    │
-                    ▼
-          Data Quality Analysis
-                    │
-                    ▼
-          ┌─────────────────────┐
-          │   Data Cleaning     │
-          │                     │
-          │ Vendor              │
-          │ Datetime            │
-          │ Passenger Count     │
-          │ Trip Distance       │
-          │ Fare                │
-          │ Payment             │
-          │ Location            │
-          │ Surcharges          │
-          └─────────────────────┘
-                    │
-                    ▼
-             Cleaned Dataset
-                    │
-             ┌──────┴──────┐
-             ▼             ▼
-        PostgreSQL      Power BI
-             │             │
-             └──────┬──────┘
-                    ▼
-             Data Analysis
-                    │
-                    ▼
-               Insights
+NYC-TLC-Analysis/
+│
+├── data/
+│   ├── cleaned_data/
+│   ├── data_dictionary/
+│   ├── data_processing/
+│   ├── raw_data/
+│   └── taxi_zones/
+│
+├── sceenshots/
+│   ├── Fare, Payment & Revenue Analysis.png
+│   ├── Trip Efficiency, Geography & Data Quality.png
+│   └── Trip Overview & Demand.png
+│
+├── NYC_Taxi_Trip.pbix
+├── .gitignore
+├── .gitattributes
+└── README.md
 ```
 
 ---
 
-## 💡 Key Outcomes
+# 🔄 End-to-End Workflow
+
+```text
+                    NYC TLC
+                 Yellow Taxi Data
+                        │
+                        ▼
+                Raw Data Loading
+                        │
+                        ▼
+                Data Exploration
+                        │
+                        ▼
+             Data Quality Analysis
+                        │
+                        ▼
+              Column-wise Cleaning
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+       Trip Data     Fare Data    Location Data
+          │             │             │
+          └─────────────┼─────────────┘
+                        │
+                        ▼
+                 Cleaned Dataset
+                        │
+                 ┌──────┴──────┐
+                 │             │
+                 ▼             ▼
+            PostgreSQL      Power BI
+                 │             │
+                 └──────┬──────┘
+                        ▼
+                Interactive Analysis
+                        │
+                        ▼
+                    Insights
+```
+
+---
+
+# 📈 Project Outcomes
 
 This project demonstrates an end-to-end approach to working with a real-world transportation dataset.
 
-The project covers:
+### The project covers:
 
 * Raw data exploration
-* Data-quality assessment
-* Attribute-level data cleaning
-* Handling invalid and inconsistent values
+* Data profiling
+* Data-quality investigation
+* Column-level validation
+* Data cleaning
+* Handling missing and invalid values
+* Logical consistency checks
 * Geographic data integration
-* Structured data storage
-* Business-oriented exploratory analysis
-* Interactive dashboard development
+* PostgreSQL data storage
+* Power BI dashboard development
+* Interactive transportation analysis
 
-The resulting workflow provides a foundation for further analysis such as **demand forecasting, trip-duration prediction, anomaly detection, geographic demand analysis, and taxi fleet optimization**.
-
----
-
-## 🚀 Future Improvements
-
-Potential extensions of this project include:
-
-* [ ] Analyze multiple months or years of TLC data
-* [ ] Build demand forecasting models
-* [ ] Predict trip duration and fare
-* [ ] Perform advanced geospatial analysis
-* [ ] Identify high-demand taxi zones
-* [ ] Analyze peak-hour demand
-* [ ] Detect anomalous or fraudulent trips
-* [ ] Build automated ETL pipelines
-* [ ] Automate Power BI data refresh
-* [ ] Add machine-learning based predictive analytics
+The emphasis of the project is on **building a trustworthy analytical dataset before drawing conclusions from it**.
 
 ---
 
-## 📚 Data Source
+# 🚀 Future Improvements
 
-The project is based on publicly available data provided by the:
+Possible extensions include:
+
+* Analyze multiple months of TLC data
+* Compare different years
+* Build taxi-demand forecasting models
+* Predict trip duration
+* Predict fare/revenue
+* Perform deeper geospatial analysis
+* Analyze high-demand taxi zones
+* Detect anomalous trips
+* Build automated ETL pipelines
+* Automate database updates
+* Automate Power BI refresh
+* Add predictive analytics and machine-learning models
+
+---
+
+# 📚 Data Source
+
+The project uses publicly available data from the:
 
 **New York City Taxi & Limousine Commission (NYC TLC)**
 
-The repository also includes the relevant TLC trip-record documentation and data dictionary for understanding the dataset structure and variables.
+The repository also includes TLC documentation and data dictionaries used to understand the meaning and constraints of the dataset fields.
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 **Anirban Das**
 
 Computer Science & Engineering Student
 
-GitHub: [@anirban2005143a](https://github.com/anirban2005143a)
+* GitHub: [@anirban2005143a](https://github.com/anirban2005143a)
 
 ---
 
-## 📄 License
+## 📄 License & Data Usage
 
 This project is intended for **educational and analytical purposes**.
 
-The underlying NYC TLC data is provided by the New York City Taxi & Limousine Commission and remains subject to its respective data terms and conditions.
+The underlying taxi trip data is provided by the **NYC Taxi & Limousine Commission** and remains subject to the applicable NYC TLC data terms and conditions.
