@@ -1,51 +1,94 @@
-vendor_id : 
-1. for january 2026 data, we consider this mapping - {
-    1 : 'Creative Mobile Technologies, LLC',
-    2 : 'Curb Mobility, LLC',
-    6 : 'Myle Technologies Inc',
-    7 : 'Helix'
-} 
-for value not in this mapping have 'Unknown Provider'
-2. create a new col - 'vendor_name'
+# NYC Taxi Trip — January 2026 Data Cleaning Rules & Assumptions
 
+ ## Vendor ID
 
-pickup_datetime & dropoff_datetime:
-1. remove rows where pickup_datetime >= dropoff_datetime
-2. Also allow dates - '2025-12-31' and '2026-02-01' in jan 2026 dataset(considering midnight cases).
-3. create a new col named 'trip_duration'
-3. remove those trips which have trip_duration < 2 min
+1. For the January 2026 data, we consider the following mapping:
+```
+vendor_mapping = {
+    1: "Creative Mobile Technologies, LLC",
+    2: "Curb Mobility, LLC",
+    6: "Myle Technologies Inc",
+    7: "Helix"
+}
+```
 
-passenger_count:
-1. passenger count >= 1 , as 0 passengers is only `0.5554%` (0.005554 ratio)
-1. as yellow_taxi is a kind of taxi , so allowed passenger is atmax 6. source : https://www.nyc.gov/site/tlc/passengers/passenger-frequently-asked-questions.page (Q: How many people can fit into a yellow taxicab?
-A: The maximum amount of passengers allowed in a yellow taxicab by law is four (4) in a four (4) passenger taxicab or five (5) passengers in a five (5) passenger taxicab. All passengers must wear seat belts and children under the age of 4 must ride in child safety seats. Children under the age of 8 must ride in a child restraint system, such as a federally approved harness, vest, or booster-seat.)
-3. drop na rows , because  "passenger_count",
+2. For values not present in this mapping, use `"Unknown Provider"`.
+3. Create a new column named `vendor_name`.
+
+---
+
+ ## Pickup Datetime & Dropoff Datetime
+
+ 1. Remove rows where `pickup_datetime >= dropoff_datetime`.
+2. Allow the dates `2025-12-31` and `2026-02-01` in the January 2026 dataset, considering midnight cases.
+3. Create a new column named `trip_duration`.
+4. Remove trips where `trip_duration < 2 minutes`.
+5. The scatter plot and quantiles show very long trips as extreme outliers. Therefore, trips exceeding **8 hours** were removed to avoid affecting the analysis.
+
+---
+
+ ## Passenger Count
+
+ 1. Keep records where `passenger_count >= 1`, as records with `0` passengers represent only **0.5554%** (`0.005554` ratio).
+2. As `yellow_taxi` is a type of taxi, the maximum allowed passenger count is **6**.
+    **Source:** [NYC Taxi & Limousine Commission — Passenger Frequently Asked Questions](<https://www.nyc.gov/site/tlc/passengers/passenger-frequently-asked-questions.page>)
+    > Q: How many people can fit into a yellow taxicab?\
+   >  A: The maximum amount of passengers allowed in a yellow taxicab by law is four (4) in a four (4) passenger taxicab or five (5) passengers in a five (5) passenger taxicab. All passengers must wear seat belts and children under the age of 4 must ride in child safety seats. Children under the age of 8 must ride in a child restraint system, such as a federally approved harness, vest, or booster-seat.
+3. Drop rows with `NA` values because the following columns also have `NA` values in the same rows, showing a batch of missing trip records:
+
+```
+[
+    "passenger_count",
     "fare_type_id",
     "store_and_fwd_flag",
     "congestion_surcharge_amount",
-    "airport_fee_amount" - these cols also have na values in the same rows - showing a batch of trip recod missing 
+    "airport_fee_amount"
+]
+```
 
-trip_diatnce & taxi_speed:
-1. taxi_speed < 100
-2. create a new col for `great circle distance' between two representative point of pickup and dropoff zone respectively 
-3. create 2 new col - distance_difference , distance_ratio
-4. distance_ratio <= 5
-4. distance_difference <= 10
-5. trip_distance > 1
+---
 
+ ## Trip Distance & Taxi Speed
 
-fare_type_id:
-1. some fare_type_id is not matching with pickup and dropoff location - will create a col `fare_type_zone_mismatch`
+1. Keep records where `taxi_speed < 100`.
+2. Create a new column for **great-circle distance** between the representative points of the pickup and drop-off zones.
+3. Create two new columns: `distance_difference` and `distance_ratio`
+4. Keep records where: `distance_ratio <= 5`
+5. Keep records where: `distance_difference <= 10`
+6. Keep records where: `trip_distance > 1`
 
-fare_amount:
-2. create a new col `fare_per_distance` group by `fare_type_id` . based on that remove outliers(fare_amount) 
+---
 
-mta_tax_amount:
-1. remove mta_tax_amount > 1.0
+ ## Fare Type ID
 
-tip_amount:
-1. remove those tip_amount > 100
-2. create a new for non credit card positive tip_amount
+1. Some `fare_type_id` values do not match the pickup and drop-off locations.
+2. Create a new column named: `fare_type_zone_mismatch`
 
-total_amount:
-1. create a new col extra_total_amount = extra amount in total_amount
+---
+
+ ## Fare Amount
+
+ 1. Create a new column named `fare_per_distance`, grouped by `fare_type_id`.
+2. Based on `fare_per_distance`, remove `fare_amount` outliers.
+3. Remove all rows with negative `fare_amount`. These rows have a very high standard deviation and represent only **1.3% of the total dataset**.
+
+---
+
+ ## MTA Tax Amount
+
+ 1. Remove rows where: ` mta_tax_amount > 1.0`
+
+---
+
+ ## Tip Amount
+
+ 1. Remove rows where: `tip_amount > 100`
+
+ 2. Create a new column for positive `tip_amount` values from non-credit-card payments.
+
+---
+
+ ## Total Amount
+
+ 1. Create a new column named `extra_total_amount`, representing the extra amount in `total_amount`.
+

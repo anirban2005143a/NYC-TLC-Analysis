@@ -32,22 +32,22 @@
 11. `fare_amount` contains negative values; these need to be checked against the payment type. - done
 11. `fare_amount` change data type to float32 - done
 12. `extra` check trends . - done
-13. `mta_tax` contains negative values; these need to be checked against the payment type.
-13. `mta_tax` Whether values follow the expected tax structure.
-13. `mta_tax` Extremely large values(relative to other values)
-14. `tip_amount` contains negative values; these need to be checked against the payment type.
-15. `tip_amount` contains suspiciously large values.
-16. `tolls_amount` contains negative values; these need to be checked against the payment type.
-17. `tolls_amount` contains suspiciously large values.
-18. `improvement_surcharge` contains negative values; these need to be checked against the payment type.
-18. `improvement_surcharge` Whether the amount follows the expected surcharge structure.
-19. `total_amount` contains negative values; these need to be checked against the payment type.
-20. `total_amount` contains suspiciously large values; these need to be checked against `trip_distance` and trip duration.
-21. `congestion_surcharge` contains negative values; these need to be checked against the payment type.
-18. `congestion_surcharge` Whether the amount follows the expected surcharge structure.
-22. `Airport_fee` contains negative values; these need to be checked.
-13. `Airport_fee` Extremely large values(relative to other values)
-23. `cbd_congestion_fee` contains negative values; these need to be checked.
+13. `mta_tax` contains negative values; these need to be checked against the payment type. - done
+13. `mta_tax` Whether values follow the expected tax structure. - done
+13. `mta_tax` Extremely large values(relative to other values) - done
+14. `tip_amount` contains negative values; these need to be checked against the payment type. - done
+15. `tip_amount` contains suspiciously large values. - done
+16. `tolls_amount` contains negative values; these need to be checked against the payment type. - done
+17. `tolls_amount` contains suspiciously large values. - done
+18. `improvement_surcharge` contains negative values; these need to be checked against the payment type.- done
+18. `improvement_surcharge` Whether the amount follows the expected surcharge structure. - done
+19. `total_amount` contains negative values; these need to be checked against the payment type. - done
+20. `total_amount` contains suspiciously large values; these need to be checked against `trip_distance` and trip duration. - done
+21. `congestion_surcharge` contains negative values; these need to be checked against the payment type. - done
+18. `congestion_surcharge` Whether the amount follows the expected surcharge structure. - done
+22. `Airport_fee` contains negative values; these need to be checked. - done
+13. `Airport_fee` Extremely large values(relative to other values) - done
+23. `cbd_congestion_fee` contains negative values; these need to be checked. - done
 
 
 External / Business-rule validation
